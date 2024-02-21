@@ -1,64 +1,71 @@
-import React from "react"
-import {
-  View,
-  Image,
-  Text,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet
-} from "react-native"
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, SafeAreaView, Image } from "react-native";
 
-const WelcomeScreen = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.group} />
-        <View style={styles.group}>
-          <Image style={styles.logo} source={require("./logo.png")} />
-          <Text style={styles.text}>
-            Let's build something amazing together!
-          </Text>
-        </View>
-        <Text style={styles.footer}>Made with ❤️ by Crowdbotics</Text>
-      </ScrollView>
-    </SafeAreaView>
-  )
-}
+const LoginScreen = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  return <SafeAreaView style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image style={styles.logo} source={{
+        uri: "https://tinyurl.com/42evm3m3"
+      }} />
+      </View>
+      <View style={styles.inputContainer}>
+        {!isLogin && <TextInput style={styles.input} placeholder="Username" autoCapitalize="none" />}
+        <TextInput style={styles.input} placeholder="Email" keyboardType="email-address" autoCapitalize="none" />
+        <TextInput style={styles.input} placeholder="Password" secureTextEntry />
+        {!isLogin && <TextInput style={styles.input} placeholder="Confirm Password" secureTextEntry />}
+      </View>
+      <TouchableOpacity style={styles.button} onPress={() => console.log(isLogin ? "Login" : "Register")}>
+        <Text style={styles.buttonText}>{isLogin ? "Login" : "Register"}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => setIsLogin(!isLogin)} style={styles.switchMode}>
+        <Text style={styles.switchText}>
+          {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+        </Text>
+      </TouchableOpacity>
+    </SafeAreaView>;
+};
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F8F8FC",
-    height: "100%"
-  },
-  scrollView: {
     flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    padding: 20
+    backgroundColor: "#F8F8FC"
   },
-  group: {
-    alignItems: "center"
+  logoContainer: {
+    marginBottom: 20
   },
   logo: {
-    height: 180,
-    width: 180,
-    padding: 40,
-    borderRadius: 30,
-    margin: 40
+    width: 100,
+    height: 100
   },
-  text: {
-    textAlign: "center",
-    fontSize: 28,
-    color: "#828AB0",
-    fontWeight: 700
+  inputContainer: {
+    width: "80%"
   },
-  footer: {
-    textAlign: "center",
-    fontSize: 18,
-    color: "#828AB0",
-    fontWeight: 700,
-    marginBottom: 20
+  input: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginTop: 10
+  },
+  button: {
+    marginTop: 20,
+    backgroundColor: "#007BFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center"
+  },
+  switchMode: {
+    marginTop: 15
+  },
+  switchText: {
+    color: "#007BFF"
   }
-})
-
-export default WelcomeScreen
+});
+export default LoginScreen;
